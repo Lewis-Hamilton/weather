@@ -1,10 +1,12 @@
+import React from "react";
+
 export default function App() {
   const call = () => {
     fetch("https://dad-jokes.p.rapidapi.com/random/joke/png", {
       method: "GET",
       headers: {
         "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
-        "x-rapidapi-key": "7076ad1595msh127766a5ba6d357p18e999jsn3e77642477f6",
+        "x-rapidapi-key": process.env.REACT_APP_API_KEY,
       },
     })
       .then((response) => response.json())
