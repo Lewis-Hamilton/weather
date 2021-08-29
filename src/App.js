@@ -1,33 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
 
 export default function App() {
-  const [setup, setSetup] = useState("");
-  const [punchline, setPunchline] = useState("");
+  const options = {
+    method: "GET",
+    url: "https://community-open-weather-map.p.rapidapi.com/weather",
+    params: {
+      q: "London,uk",
+      lat: "0",
+      lon: "0",
+      callback: "test",
+      id: "2172797",
+      lang: "null",
+      units: '"metric" or "imperial"',
+      mode: "xml, html",
+    },
+    headers: {
+      "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
+      "x-rapidapi-key": process.env.REACT_APP_WEATHER_API_KEY,
+    },
+  };
+
   const call = () => {
-    fetch("https://dad-jokes.p.rapidapi.com/random/joke/png", {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_API_KEY,
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response.body.setup);
-        console.log(response.body.punchline);
-        setSetup(response.body.setup);
-        setPunchline(response.body.punchline);
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(function (error) {
+        console.error(error);
       });
   };
 
   return (
     <div className="App">
       <button onClick={() => call()}>Call</button>
-      <h1>{setup}</h1>
-      <h1>{punchline}</h1>
     </div>
   );
 }
