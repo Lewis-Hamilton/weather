@@ -3,11 +3,12 @@ import axios from "axios";
 
 export default function App() {
   const [unit, setUnit] = useState("imperial");
+  const [city, setCity] = useState("");
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
     params: {
-      q: "Bentonville",
+      q: city,
       units: unit,
     },
     headers: {
@@ -29,6 +30,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <input onChange={(e) => setCity(e.target.value)}></input>
       <button onClick={() => setUnit("metric")}>Metric</button>
       <button onClick={() => setUnit("imperial")}>Imperial</button>
       <button onClick={() => call()}>Call</button>
