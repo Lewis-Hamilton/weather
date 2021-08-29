@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 export default function App() {
+  const [unit, setUnit] = useState("imperial");
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
     params: {
-      q: "London,uk",
-      lat: "0",
-      lon: "0",
-      callback: "test",
-      id: "2172797",
-      lang: "null",
-      units: '"metric" or "imperial"',
-      mode: "xml, html",
+      q: "Bentonville",
+      units: unit,
     },
     headers: {
       "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
@@ -34,6 +29,8 @@ export default function App() {
 
   return (
     <div className="App">
+      <button onClick={() => setUnit("metric")}>Metric</button>
+      <button onClick={() => setUnit("imperial")}>Imperial</button>
       <button onClick={() => call()}>Call</button>
     </div>
   );
