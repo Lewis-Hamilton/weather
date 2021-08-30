@@ -4,6 +4,7 @@ import axios from "axios";
 export default function App() {
   const [unit, setUnit] = useState("imperial");
   const [city, setCity] = useState("");
+  const [temp, setTemp] = useState("");
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -22,6 +23,8 @@ export default function App() {
       .request(options)
       .then(function (response) {
         console.log(response.data);
+        console.log(response.data.main.temp);
+        setTemp(response.data.main.temp);
       })
       .catch(function (error) {
         console.error(error);
@@ -34,6 +37,7 @@ export default function App() {
       <button onClick={() => setUnit("metric")}>Metric</button>
       <button onClick={() => setUnit("imperial")}>Imperial</button>
       <button onClick={() => call()}>Call</button>
+      <h1>{temp}</h1>
     </div>
   );
 }
