@@ -9,6 +9,7 @@ import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -30,16 +31,20 @@ export default function App() {
   };
 
   const call = () => {
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
-        console.log(response.data.main.temp);
-        setTemp(response.data.main.temp);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    if (city === "") {
+      setTemp("Enter a location Dumbass");
+    } else {
+      axios
+        .request(options)
+        .then(function (response) {
+          // console.log(response.data);
+          // console.log(response.data.main.temp);
+          setTemp(response.data.main.temp);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -82,8 +87,10 @@ export default function App() {
           </ListItem>
         </List>
       </Drawer>
-      <button onClick={() => call()}>Call</button>
-      <h1>{temp}</h1>
+      <Button variant="contained" color="primary" onClick={() => call()}>
+        Call
+      </Button>
+      <Typography variant="h1">{temp}</Typography>
     </div>
   );
 }
