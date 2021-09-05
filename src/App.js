@@ -14,8 +14,9 @@ import Typography from "@material-ui/core/Typography";
 export default function App() {
   const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState("imperial");
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Unkown");
   const [temp, setTemp] = useState("");
+  const [feel, setFeel] = useState("");
   const [check, setCheck] = useState(false);
   const options = {
     method: "GET",
@@ -31,15 +32,16 @@ export default function App() {
   };
 
   const call = () => {
-    if (city === "") {
+    if (city === "Unkown") {
       setTemp("Enter a location Dumbass");
     } else {
       axios
         .request(options)
         .then(function (response) {
-          // console.log(response.data);
-          // console.log(response.data.main.temp);
+          console.log(response.data);
+          console.log(response.data.main.temp);
           setTemp(response.data.main.temp);
+          setFeel(response.data.main.feels_like);
         })
         .catch(function (error) {
           console.error(error);
@@ -90,7 +92,9 @@ export default function App() {
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
-      <Typography variant="h1">{temp}</Typography>
+      <Typography variant="h1">Temperature: {temp}</Typography>
+      <Typography variant="h2">Feels Like: {feel}</Typography>
+      <Typography variatn="h5">Current Location: {city}</Typography>
     </div>
   );
 }
