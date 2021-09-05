@@ -32,7 +32,7 @@ export default function App() {
   };
 
   const call = () => {
-    if (city === "Unkown") {
+    if (city === "Unkown" || "") {
       setTemp("Enter a location Dumbass");
     } else {
       axios
@@ -52,6 +52,10 @@ export default function App() {
   useEffect(() => {
     unitChange();
   });
+
+  useEffect(() => {
+    call();
+  }, []);
 
   const unitChange = () => {
     if (check === true) {
