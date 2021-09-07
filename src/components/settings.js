@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -8,12 +7,13 @@ import ListItem from "@material-ui/core/ListItem";
 import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import { useDispatch } from "react-redux";
+import { changeLocation } from "../redux/reducers/locationReducer";
 
 export default function Settings() {
   const [open, setOpen] = useState(false);
-  const [unit, setUnit] = useState("imperial");
-  const [city, setCity] = useState("Unkown");
   const [check, setCheck] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     unitChange();
@@ -21,9 +21,9 @@ export default function Settings() {
 
   const unitChange = () => {
     if (check === true) {
-      setUnit("metric");
+      dispatch({ type: "METRIC" });
     } else {
-      setUnit("imperial");
+      dispatch({ type: "IMPERIAL" });
     }
   };
 
@@ -50,7 +50,7 @@ export default function Settings() {
             <TextField
               label="Location"
               variant="outlined"
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => dispatch(changeLocation(e.target.value))}
             ></TextField>
           </ListItem>
         </List>

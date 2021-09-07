@@ -12,11 +12,12 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Modal from "./modal";
 import Settings from "./settings";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  const [unit, setUnit] = useState("imperial");
-  const [city, setCity] = useState("Unkown");
+  const unit = useSelector((state) => state.unitReducer.unit);
+  const city = useSelector((state) => state.locationReducer.location);
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
   const [check, setCheck] = useState(false);
@@ -51,21 +52,21 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    unitChange();
-  });
+  //   useEffect(() => {
+  //     unitChange();
+  //   });
 
   useEffect(() => {
     call();
   }, []);
 
-  const unitChange = () => {
-    if (check === true) {
-      setUnit("metric");
-    } else {
-      setUnit("imperial");
-    }
-  };
+  //   const unitChange = () => {
+  //     if (check === true) {
+  //       setUnit("metric");
+  //     } else {
+  //       setUnit("imperial");
+  //     }
+  //   };
 
   return (
     <>
