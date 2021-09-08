@@ -12,7 +12,6 @@ export default function locationReducer(state = initialState, action) {
 }
 
 export const changeLocation = (location) => {
-  console.log(location);
   return {
     type: "LOCATION",
     text: location,
