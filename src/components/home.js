@@ -53,8 +53,8 @@ export default function Home() {
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
-      <Typography variant="h1">Temperature: {temp}</Typography>
-      <Typography variant="h2">Feels Like: {feel}</Typography>
+      <Typography variant="h1">Temp: {temp}</Typography>
+      <Typography variant="h2">Feels: {feel}</Typography>
       <Typography variatn="h5">Current Location: {city}</Typography>
     </>
   );
