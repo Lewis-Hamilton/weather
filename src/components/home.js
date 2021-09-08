@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import SettingsIcon from "@material-ui/icons/Settings";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Switch from "@material-ui/core/Switch";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Modal from "./modal";
 import Settings from "./settings";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
-  const [check, setCheck] = useState(false);
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -52,52 +42,14 @@ export default function Home() {
     }
   };
 
-  //   useEffect(() => {
-  //     unitChange();
-  //   });
-
   useEffect(() => {
     call();
   }, []);
-
-  //   const unitChange = () => {
-  //     if (check === true) {
-  //       setUnit("metric");
-  //     } else {
-  //       setUnit("imperial");
-  //     }
-  //   };
 
   return (
     <>
       <Settings />
       <Modal />
-      {/* <IconButton onClick={() => setOpen(true)}>
-        <SettingsIcon />
-      </IconButton>
-      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <List>
-          <ListItem>
-            <Grid container alignItems="center">
-              <Grid item>Imperial</Grid>
-              <Grid item>
-                <Switch
-                  checked={check}
-                  onChange={() => setCheck(!check)}
-                ></Switch>
-              </Grid>
-              <Grid item>Metric</Grid>
-            </Grid>
-          </ListItem>
-          <ListItem>
-            <TextField
-              label="Location"
-              variant="outlined"
-              onChange={(e) => setCity(e.target.value)}
-            ></TextField>
-          </ListItem>
-        </List>
-      </Drawer> */}
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
