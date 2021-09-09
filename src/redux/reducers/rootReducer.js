@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-
 import unitReducer from "./unitReducer";
 import locationReducer from "./locationReducer";
 
