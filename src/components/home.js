@@ -43,19 +43,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    call();
+    if (city !== "") {
+      call();
+    }
   }, []);
 
   return (
     <>
       <Settings />
       <Modal />
+      <Typography variant="h1">Temp: {temp}</Typography>
+      <Typography variant="h2">Feels: {feel}</Typography>
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
-      <Typography variant="h1">Temperature: {temp}</Typography>
-      <Typography variant="h2">Feels Like: {feel}</Typography>
-      <Typography variatn="h5">Current Location: {city}</Typography>
     </>
   );
 }

@@ -5,16 +5,17 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeLocation } from "../redux/reducers/locationReducer";
 
 export default function Modal() {
   const [open, setOpen] = useState(false);
+  const city = useSelector((state) => state.locationReducer.location);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setOpen(true);
-  }, []);
+    if (city === "") setOpen(true);
+  }, [city]);
 
   return (
     <div>
