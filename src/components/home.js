@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Modal from "./modal";
 import Settings from "./settings";
 import { useSelector } from "react-redux";
+import Grid from "@material-ui/core/Grid";
 
 export default function Home() {
   const unit = useSelector((state) => state.unitReducer.unit);
@@ -33,8 +34,8 @@ export default function Home() {
         .then(function (response) {
           console.log(response.data);
           console.log(response.data.main.temp);
-          setTemp(response.data.main.temp);
-          setFeel(response.data.main.feels_like);
+          setTemp(Math.round(response.data.main.temp));
+          setFeel(Math.round(response.data.main.feels_like));
         })
         .catch(function (error) {
           console.error(error);
@@ -52,8 +53,19 @@ export default function Home() {
     <>
       <Settings />
       <Modal />
-      <Typography variant="h1">Temp: {temp}</Typography>
-      <Typography variant="h2">Feels: {feel}</Typography>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography variant="h1">{temp}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h2">{feel}</Typography>
+        </Grid>
+      </Grid>
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
