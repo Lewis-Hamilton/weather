@@ -22,20 +22,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Settings() {
   const [open, setOpen] = useState(false);
-  const [check, setCheck] = useState(false);
+  const [unitCheck, setUnitCheck] = useState(false);
+  const [tempCheck, setTempCheck] = useState(false);
   const city = useSelector((state) => state.locationReducer.location);
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
     unitChange();
+    tempChange();
   });
 
   const unitChange = () => {
-    if (check === true) {
+    if (unitCheck === true) {
       dispatch({ type: "METRIC" });
     } else {
       dispatch({ type: "IMPERIAL" });
+    }
+  };
+
+  const tempChange = () => {
+    if (tempCheck === false) {
+      dispatch({ type: "ROUNDED" });
+    } else {
+      dispatch({ type: "EXACT" });
     }
   };
 
@@ -46,16 +56,30 @@ export default function Settings() {
       </IconButton>
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <List>
+          <ListItem>Units</ListItem>
           <ListItem>
             <Grid container alignItems="center">
               <Grid item>Imperial</Grid>
               <Grid item>
                 <Switch
-                  checked={check}
-                  onChange={() => setCheck(!check)}
+                  checked={unitCheck}
+                  onChange={() => setUnitCheck(!unitCheck)}
                 ></Switch>
               </Grid>
               <Grid item>Metric</Grid>
+            </Grid>
+          </ListItem>
+          <ListItem>Exact Values</ListItem>
+          <ListItem>
+            <Grid container alignItems="center">
+              <Grid item>Off</Grid>
+              <Grid item>
+                <Switch
+                  checked={tempCheck}
+                  onChange={() => setTempCheck(!tempCheck)}
+                ></Switch>
+              </Grid>
+              <Grid item>On</Grid>
             </Grid>
           </ListItem>
           <ListItem>
