@@ -56,6 +56,7 @@ export default function Settings() {
       </IconButton>
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <List>
+          <ListItem>Units</ListItem>
           <ListItem>
             <Grid container alignItems="center">
               <Grid item>Imperial</Grid>
@@ -68,8 +69,8 @@ export default function Settings() {
               <Grid item>Metric</Grid>
             </Grid>
           </ListItem>
+          <ListItem>Exact Values</ListItem>
           <ListItem>
-            {" "}
             <Grid container alignItems="center">
               <Grid item>Off</Grid>
               <Grid item>
