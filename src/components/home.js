@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 export default function Home() {
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
+  const rounded = useSelector((state) => state.tempReducer.rounded);
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
   const options = {
@@ -34,8 +35,13 @@ export default function Home() {
         .then(function (response) {
           console.log(response.data);
           console.log(response.data.main.temp);
-          setTemp(Math.round(response.data.main.temp));
-          setFeel(Math.round(response.data.main.feels_like));
+          if (rounded === true) {
+            setTemp(Math.round(response.data.main.temp));
+            setFeel(Math.round(response.data.main.feels_like));
+          } else if (rounded === false) {
+            setTemp(response.data.main.temp);
+            setFeel(response.data.main.feels_like);
+          }
         })
         .catch(function (error) {
           console.error(error);
