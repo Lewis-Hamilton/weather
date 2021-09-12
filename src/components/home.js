@@ -13,6 +13,7 @@ export default function Home() {
   const rounded = useSelector((state) => state.tempReducer.rounded);
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
+  //const [weather, setWeather] = useState([]);
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -35,6 +36,10 @@ export default function Home() {
         .then(function (response) {
           console.log(response.data);
           console.log(response.data.main.temp);
+          //ask kegen about this
+          console.log(response.data.weather);
+          console.log(response.data.main);
+          //setWeather(response.data.weather);
           if (rounded === true) {
             setTemp(Math.round(response.data.main.temp));
             setFeel(Math.round(response.data.main.feels_like));
@@ -66,10 +71,13 @@ export default function Home() {
         alignItems="center"
       >
         <Grid item>
-          <Typography variant="h1">{temp}</Typography>
+          <Typography variant="h1">{temp}&deg;</Typography>
         </Grid>
         <Grid item>
-          <Typography variant="h2">{feel}</Typography>
+          <Typography variant="h2">{feel}&deg;</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h2"></Typography>
         </Grid>
       </Grid>
       <Button variant="contained" color="primary" onClick={() => call()}>
