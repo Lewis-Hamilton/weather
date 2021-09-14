@@ -8,7 +8,7 @@ import axios from "axios";
 export default function Weather() {
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState("");
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
@@ -32,7 +32,7 @@ export default function Weather() {
       axios
         .request(options)
         .then(function (response) {
-          console.log(response.data);
+          //console.log(response.data);
           //console.log(response.data.main);
           //console.log(response.data.weather[0].description);
           if (rounded) {
