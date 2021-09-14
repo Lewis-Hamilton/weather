@@ -13,7 +13,7 @@ export default function Home() {
   const rounded = useSelector((state) => state.tempReducer.rounded);
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
-  //const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState([]);
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -35,19 +35,16 @@ export default function Home() {
         .request(options)
         .then(function (response) {
           //console.log(response.data);
-          //console.log(response.data.main.temp);
-          //ask kegen about this
-          if (response.data.weather.length) {
-            console.log(response.data.weather[0].main);
-          }
           //console.log(response.data.main);
-          //setWeather(response.data.weather);
           if (rounded) {
             setTemp(Math.round(response.data.main.temp));
             setFeel(Math.round(response.data.main.feels_like));
           } else if (!rounded) {
             setTemp(response.data.main.temp);
             setFeel(response.data.main.feels_like);
+          }
+          if (response.data.weather.length) {
+            setWeather(response.data.weather[0].main);
           }
         })
         .catch(function (error) {
@@ -57,7 +54,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!city) {
+    if (city) {
       call();
     }
   }, []);
@@ -79,7 +76,7 @@ export default function Home() {
           <Typography variant="h2">{feel}&deg;</Typography>
         </Grid>
         <Grid item>
-          <Typography variant="h2"></Typography>
+          <Typography variant="h2">{weather}</Typography>
         </Grid>
       </Grid>
       <Button variant="contained" color="primary" onClick={() => call()}>
