@@ -34,16 +34,18 @@ export default function Home() {
       axios
         .request(options)
         .then(function (response) {
-          console.log(response.data);
-          console.log(response.data.main.temp);
+          //console.log(response.data);
+          //console.log(response.data.main.temp);
           //ask kegen about this
-          console.log(response.data.weather);
-          console.log(response.data.main);
+          if (response.data.weather.length) {
+            console.log(response.data.weather[0].main);
+          }
+          //console.log(response.data.main);
           //setWeather(response.data.weather);
-          if (rounded === true) {
+          if (rounded) {
             setTemp(Math.round(response.data.main.temp));
             setFeel(Math.round(response.data.main.feels_like));
-          } else if (rounded === false) {
+          } else if (!rounded) {
             setTemp(response.data.main.temp);
             setFeel(response.data.main.feels_like);
           }
@@ -55,7 +57,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (city !== "") {
+    if (!city) {
       call();
     }
   }, []);
