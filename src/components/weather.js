@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Paper from "@material-ui/core/Paper";
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
@@ -66,15 +67,17 @@ export default function Weather() {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item>
-          <Typography variant="h1">{temp}&deg;</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="h2">{feel}&deg;</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="h2">{weather}</Typography>
-        </Grid>
+        <Paper>
+          <Grid item>
+            <Typography variant="h1">{temp}&deg;</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h2">{feel}&deg;</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h2">{weather}</Typography>
+          </Grid>
+        </Paper>
       </Grid>
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
