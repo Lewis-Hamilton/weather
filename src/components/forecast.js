@@ -33,15 +33,23 @@ export default function Weather() {
       axios
         .request(options)
         .then(function (response) {
-          for (var i = 0; i <= 7; i++) {
-            // console.log(response.data.list[i].temp.min);
-            // console.log(response.data.list[i].temp.max);
-            // console.log(i);
-            // tempArray = tempArray.concat({
-            //   min: response.data.list[i].temp.min,
-            //   max: response.data.list[i].temp.max,
-            // });
-          }
+          // for (var i = 0; i <= 7; i++) {
+          //   console.log(response.data.list[i].temp.min);
+          //   console.log(response.data.list[i].temp.max);
+          //   console.log(i);
+          //   tempArray = tempArray.concat({
+          //     min: response.data.list[i].temp.min,
+          //     max: response.data.list[i].temp.max,
+          //   });
+          // }
+          const data = response.data.list;
+
+          const tempArray = data.map((value) => {
+            return {
+              min: value.temp.min,
+              max: value.temp.max,
+            };
+          });
           setForecast(tempArray);
           //console.log(response.data.main)
           //   setForecast(response.data.list);

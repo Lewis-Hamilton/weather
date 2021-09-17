@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
+// import Stack from "@material-ui/core/Stack";
+// import { styled } from "@mui/material/styles";
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
@@ -59,8 +61,27 @@ export default function Weather() {
     }
   }, []);
 
+  // const Item = styled()(({ theme }) => ({
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(1),
+  //   textAlign: "center",
+  // }));
+
   return (
     <>
+      {/* <Paper>
+        <Stack>
+          <Item>
+            <Typography variant="h1">{temp}&deg;</Typography>
+          </Item>
+          <Item>
+            <Typography variant="h2">{feel}&deg;</Typography>
+          </Item>
+          <Item>
+            <Typography variant="h2">{weather}</Typography>
+          </Item>
+        </Stack>
+      </Paper> */}
       <Grid
         container
         direction="column"
