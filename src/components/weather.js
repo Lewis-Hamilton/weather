@@ -11,6 +11,9 @@ const useStyles = makeStyles(() => ({
   paper: {
     margin: "40px",
   },
+  // colorStyle: {
+  //   color: funColors? "red" : "Black",
+  // }
 }));
 
 export default function Weather() {
@@ -20,6 +23,7 @@ export default function Weather() {
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
+  const funColors = useSelector((state) => state.colorReducer.funColors);
   const classes = useStyles();
   const options = {
     method: "GET",
@@ -34,6 +38,10 @@ export default function Weather() {
     },
   };
 
+  const colorStyle = {
+    color: funColors ? "red" : "Black",
+  };
+  console.log(funColors);
   const call = () => {
     if (city === "Unkown" || "") {
       setTemp("Enter a location Dumbass");
@@ -67,12 +75,6 @@ export default function Weather() {
     }
   }, []);
 
-  // const Item = styled()(({ theme }) => ({
-  //   ...theme.typography.body2,
-  //   padding: theme.spacing(1),
-  //   textAlign: "center",
-  // }));
-
   return (
     <>
       <Paper className={classes.paper}>
@@ -83,7 +85,9 @@ export default function Weather() {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h1">{temp}&deg;</Typography>
+            <Typography style={colorStyle} variant="h1">
+              {temp}&deg;
+            </Typography>
           </Grid>
           <Grid item>
             <Typography variant="h2">{feel}&deg;</Typography>
