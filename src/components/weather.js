@@ -5,8 +5,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
-// import Stack from "@material-ui/core/Stack";
-// import { styled } from "@mui/material/styles";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  paper: {
+    margin: "40px",
+  },
+}));
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
@@ -15,6 +20,7 @@ export default function Weather() {
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
+  const classes = useStyles();
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -69,26 +75,13 @@ export default function Weather() {
 
   return (
     <>
-      {/* <Paper>
-        <Stack>
-          <Item>
-            <Typography variant="h1">{temp}&deg;</Typography>
-          </Item>
-          <Item>
-            <Typography variant="h2">{feel}&deg;</Typography>
-          </Item>
-          <Item>
-            <Typography variant="h2">{weather}</Typography>
-          </Item>
-        </Stack>
-      </Paper> */}
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Paper>
+      <Paper className={classes.paper}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Grid item>
             <Typography variant="h1">{temp}&deg;</Typography>
           </Grid>
@@ -98,8 +91,8 @@ export default function Weather() {
           <Grid item>
             <Typography variant="h2">{weather}</Typography>
           </Grid>
-        </Paper>
-      </Grid>
+        </Grid>
+      </Paper>
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
