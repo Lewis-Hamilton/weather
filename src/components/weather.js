@@ -11,15 +11,13 @@ const useStyles = makeStyles(() => ({
   paper: {
     margin: "40px",
   },
-  // colorStyle: {
-  //   color: funColors? "red" : "Black",
-  // }
 }));
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
   const [weather, setWeather] = useState("");
+  const [color, setColor] = useState("");
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
@@ -39,9 +37,9 @@ export default function Weather() {
   };
 
   const colorStyle = {
-    color: funColors ? "red" : "Black",
+    color: funColors ? color : "Black",
   };
-  console.log(funColors);
+
   const call = () => {
     if (city === "Unkown" || "") {
       setTemp("Enter a location Dumbass");
@@ -66,6 +64,11 @@ export default function Weather() {
         .catch(function (error) {
           console.error(error);
         });
+    }
+    if (temp >= 70) {
+      setColor("red");
+    } else if (temp < 70) {
+      setColor("blue");
     }
   };
 
