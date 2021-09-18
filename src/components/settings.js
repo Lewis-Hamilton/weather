@@ -36,7 +36,7 @@ export default function Settings() {
   });
 
   const unitChange = () => {
-    if (unitCheck === true) {
+    if (unitCheck) {
       dispatch({ type: "METRIC" });
     } else {
       dispatch({ type: "IMPERIAL" });
@@ -44,7 +44,7 @@ export default function Settings() {
   };
 
   const tempChange = () => {
-    if (tempCheck === false) {
+    if (tempCheck) {
       dispatch({ type: "ROUNDED" });
     } else {
       dispatch({ type: "EXACT" });
