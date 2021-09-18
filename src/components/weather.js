@@ -75,21 +75,35 @@ export default function Weather() {
   };
 
   const changeTempColor = () => {
-    if (temp >= 70) {
-      setTempColor("red");
-    } else if (temp < 70) {
-      setTempColor("blue");
+    if (temp < 0) {
+      setTempColor("#00FFFD");
+    } else if (temp >= 0 && temp < 32) {
+      setTempColor("#0094FF");
+    } else if (temp >= 32 && temp < 60) {
+      setTempColor("#0094FF");
+    } else if (temp >= 60 && temp < 80) {
+      setTempColor("#FFD100");
+    } else if (temp >= 80 && temp < 100) {
+      setTempColor("#FF9D00");
+    } else if (temp >= 100) {
+      setTempColor("#D50F09");
     }
-    console.log(tempColor);
   };
 
   const changefeelColor = () => {
-    if (feel >= 70) {
-      setFeelColor("red");
-    } else if (feel < 70) {
-      setFeelColor("blue");
+    if (temp < 0) {
+      setFeelColor("#00FFFD");
+    } else if (temp >= 0 && temp < 32) {
+      setFeelColor("#0094FF");
+    } else if (temp >= 32 && temp < 60) {
+      setFeelColor("#0094FF");
+    } else if (temp >= 60 && temp < 80) {
+      setFeelColor("#FFD100");
+    } else if (temp >= 80 && temp < 100) {
+      setFeelColor("#FF9D00");
+    } else if (temp >= 100) {
+      setFeelColor("#D50F09");
     }
-    console.log(feelColor);
   };
 
   useEffect(() => {
