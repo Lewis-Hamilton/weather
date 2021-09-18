@@ -45,9 +45,9 @@ export default function Settings() {
 
   const tempChange = () => {
     if (tempCheck) {
-      dispatch({ type: "ROUNDED" });
-    } else {
       dispatch({ type: "EXACT" });
+    } else {
+      dispatch({ type: "ROUNDED" });
     }
   };
 

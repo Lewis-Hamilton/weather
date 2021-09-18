@@ -17,7 +17,8 @@ export default function Weather() {
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
   const [weather, setWeather] = useState("");
-  const [color, setColor] = useState("");
+  const [tempColor, setTempColor] = useState("");
+  const [feelColor, setFeelColor] = useState("");
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
@@ -36,8 +37,12 @@ export default function Weather() {
     },
   };
 
-  const colorStyle = {
-    color: funColors ? color : "Black",
+  const tempStyle = {
+    color: funColors ? tempColor : "Black",
+  };
+
+  const feelStyle = {
+    color: funColors ? feelColor : "Black",
   };
 
   const call = () => {
@@ -65,11 +70,26 @@ export default function Weather() {
           console.error(error);
         });
     }
+    changeTempColor();
+    changefeelColor();
+  };
+
+  const changeTempColor = () => {
     if (temp >= 70) {
-      setColor("red");
+      setTempColor("red");
     } else if (temp < 70) {
-      setColor("blue");
+      setTempColor("blue");
     }
+    console.log(tempColor);
+  };
+
+  const changefeelColor = () => {
+    if (feel >= 70) {
+      setFeelColor("red");
+    } else if (feel < 70) {
+      setFeelColor("blue");
+    }
+    console.log(feelColor);
   };
 
   useEffect(() => {
@@ -88,12 +108,14 @@ export default function Weather() {
           alignItems="center"
         >
           <Grid item>
-            <Typography style={colorStyle} variant="h1">
+            <Typography style={tempStyle} variant="h1">
               {temp}&deg;
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="h2">{feel}&deg;</Typography>
+            <Typography style={feelStyle} variant="h2">
+              {feel}&deg;
+            </Typography>
           </Grid>
           <Grid item>
             <Typography variant="h2">{weather}</Typography>
