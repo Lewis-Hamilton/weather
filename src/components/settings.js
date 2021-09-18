@@ -24,6 +24,7 @@ export default function Settings() {
   const [open, setOpen] = useState(false);
   const [unitCheck, setUnitCheck] = useState(false);
   const [tempCheck, setTempCheck] = useState(false);
+  const [funColors, setFunColors] = useState(true);
   const city = useSelector((state) => state.locationReducer.location);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -31,10 +32,11 @@ export default function Settings() {
   useEffect(() => {
     unitChange();
     tempChange();
+    colorChange();
   });
 
   const unitChange = () => {
-    if (unitCheck === true) {
+    if (unitCheck) {
       dispatch({ type: "METRIC" });
     } else {
       dispatch({ type: "IMPERIAL" });
@@ -42,10 +44,18 @@ export default function Settings() {
   };
 
   const tempChange = () => {
-    if (tempCheck === false) {
-      dispatch({ type: "ROUNDED" });
-    } else {
+    if (tempCheck) {
       dispatch({ type: "EXACT" });
+    } else {
+      dispatch({ type: "ROUNDED" });
+    }
+  };
+
+  const colorChange = () => {
+    if (funColors) {
+      dispatch({ type: "COLORS" });
+    } else if (!funColors) {
+      dispatch({ type: "BLACK" });
     }
   };
 
@@ -77,6 +87,19 @@ export default function Settings() {
                 <Switch
                   checked={tempCheck}
                   onChange={() => setTempCheck(!tempCheck)}
+                ></Switch>
+              </Grid>
+              <Grid item>On</Grid>
+            </Grid>
+          </ListItem>
+          <ListItem>Fun Colors</ListItem>
+          <ListItem>
+            <Grid container alignItems="center">
+              <Grid item>Off</Grid>
+              <Grid item>
+                <Switch
+                  checked={funColors}
+                  onChange={() => setFunColors(!funColors)}
                 ></Switch>
               </Grid>
               <Grid item>On</Grid>

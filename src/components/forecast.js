@@ -4,6 +4,14 @@ import Grid from "@material-ui/core/Grid";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  paper: {
+    margin: "40px",
+  },
+}));
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
@@ -13,6 +21,7 @@ export default function Weather() {
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
+  const classes = useStyles();
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/forecast/daily",
@@ -33,18 +42,15 @@ export default function Weather() {
       axios
         .request(options)
         .then(function (response) {
-          for (var i = 0; i <= 7; i++) {
-            // console.log(response.data.list[i].temp.min);
-            // console.log(response.data.list[i].temp.max);
-            // console.log(i);
-            // tempArray = tempArray.concat({
-            //   min: response.data.list[i].temp.min,
-            //   max: response.data.list[i].temp.max,
-            // });
-          }
-          setForecast(tempArray);
-          //console.log(response.data.main)
-          //   setForecast(response.data.list);
+          const data = response.data.list;
+          setForecast(
+            data.map((value) => {
+              return {
+                min: value.temp.min,
+                max: value.temp.max,
+              };
+            })
+          );
         })
         .catch(function (error) {
           console.error(error);
@@ -52,28 +58,30 @@ export default function Weather() {
     }
   };
 
-  //   useEffect(() => {
-  //     if (city) {
-  //       call();
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (city) {
+      call();
+    }
+  }, []);
 
   return (
     <>
       <Button onClick={() => call()}>forecast</Button>
-      <Typography variant="h6">Daily Forecast</Typography>
-      <Grid>
-        {forecast.map((forecast) => (
-          <>
-            <Grid item key={forecast.min}>
-              {"low " + forecast.min}
-            </Grid>
-            <Grid item key={forecast.max}>
-              {"High" + forecast.max}
-            </Grid>
-          </>
-        ))}
-      </Grid>
+      <Paper className={classes.paper}>
+        <Typography variant="h6">Daily Forecast</Typography>
+        <Grid>
+          {forecast.map((forecast) => (
+            <>
+              <Grid item key={forecast.min}>
+                {"low " + forecast.min}
+              </Grid>
+              <Grid item key={forecast.max}>
+                {"High" + forecast.max}
+              </Grid>
+            </>
+          ))}
+        </Grid>
+      </Paper>
     </>
   );
 }

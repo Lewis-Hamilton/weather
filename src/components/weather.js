@@ -5,14 +5,25 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  paper: {
+    margin: "40px",
+  },
+}));
 
 export default function Weather() {
   const [temp, setTemp] = useState("");
   const [feel, setFeel] = useState("");
   const [weather, setWeather] = useState("");
+  const [tempColor, setTempColor] = useState("");
+  const [feelColor, setFeelColor] = useState("");
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
+  const funColors = useSelector((state) => state.colorReducer.funColors);
+  const classes = useStyles();
   const options = {
     method: "GET",
     url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -24,6 +35,14 @@ export default function Weather() {
       "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
       "x-rapidapi-key": process.env.REACT_APP_WEATHER_API_KEY,
     },
+  };
+
+  const tempStyle = {
+    color: funColors ? tempColor : "Black",
+  };
+
+  const feelStyle = {
+    color: funColors ? feelColor : "Black",
   };
 
   const call = () => {
@@ -51,6 +70,40 @@ export default function Weather() {
           console.error(error);
         });
     }
+    changeTempColor();
+    changefeelColor();
+  };
+
+  const changeTempColor = () => {
+    if (temp < 0) {
+      setTempColor("#00FFFD");
+    } else if (temp >= 0 && temp < 32) {
+      setTempColor("#0094FF");
+    } else if (temp >= 32 && temp < 60) {
+      setTempColor("#0094FF");
+    } else if (temp >= 60 && temp < 80) {
+      setTempColor("#FFD100");
+    } else if (temp >= 80 && temp < 100) {
+      setTempColor("#FF9D00");
+    } else if (temp >= 100) {
+      setTempColor("#D50F09");
+    }
+  };
+
+  const changefeelColor = () => {
+    if (temp < 0) {
+      setFeelColor("#00FFFD");
+    } else if (temp >= 0 && temp < 32) {
+      setFeelColor("#0094FF");
+    } else if (temp >= 32 && temp < 60) {
+      setFeelColor("#0094FF");
+    } else if (temp >= 60 && temp < 80) {
+      setFeelColor("#FFD100");
+    } else if (temp >= 80 && temp < 100) {
+      setFeelColor("#FF9D00");
+    } else if (temp >= 100) {
+      setFeelColor("#D50F09");
+    }
   };
 
   useEffect(() => {
@@ -61,24 +114,28 @@ export default function Weather() {
 
   return (
     <>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Paper>
+      <Paper className={classes.paper}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Grid item>
-            <Typography variant="h1">{temp}&deg;</Typography>
+            <Typography style={tempStyle} variant="h1">
+              {temp}&deg;
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="h2">{feel}&deg;</Typography>
+            <Typography style={feelStyle} variant="h2">
+              {feel}&deg;
+            </Typography>
           </Grid>
           <Grid item>
             <Typography variant="h2">{weather}</Typography>
           </Grid>
-        </Paper>
-      </Grid>
+        </Grid>
+      </Paper>
       <Button variant="contained" color="primary" onClick={() => call()}>
         Call
       </Button>
