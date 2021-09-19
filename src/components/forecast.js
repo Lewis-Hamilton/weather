@@ -79,21 +79,25 @@ export default function Weather() {
       <Button onClick={() => call()}>forecast</Button>
       <Paper className={classes.paper}>
         <Typography variant="h6">Daily Forecast</Typography>
-        {forecast.map((forecast) => (
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItemss="center"
-          >
-            <Grid item key={forecast.id}>
-              {"low " + forecast.min}
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItemss="center"
+          spacing={2}
+        >
+          {forecast.map((forecast) => (
+            <Grid item>
+              <Grid item key={forecast.id}>
+                {forecast.min}
+              </Grid>
+              <Grid item key={forecast.id}>
+                {forecast.max}
+              </Grid>
             </Grid>
-            <Grid item key={forecast.id}>
-              {"High" + forecast.max}
-            </Grid>
-          </Grid>
-        ))}
+          ))}
+        </Grid>
       </Paper>
     </>
   );
