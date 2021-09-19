@@ -47,30 +47,23 @@ export default function Weather() {
 
   //api call got get temperature data
   const call = () => {
-    if (city === "Unkown" || "") {
-      setTemp("Enter a location Dumbass");
-    } else {
-      axios
-        .request(options)
-        .then(function (response) {
-          //console.log(response.data);
-          //console.log(response.data.main);
-          //console.log(response.data.weather[0].description);
-          if (rounded) {
-            setTemp(Math.round(response.data.main.temp));
-            setFeel(Math.round(response.data.main.feels_like));
-          } else if (!rounded) {
-            setTemp(response.data.main.temp);
-            setFeel(response.data.main.feels_like);
-          }
-          if (response.data.weather.length) {
-            setWeather(response.data.weather[0].main);
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
+    axios
+      .request(options)
+      .then(function (response) {
+        if (rounded) {
+          setTemp(Math.round(response.data.main.temp));
+          setFeel(Math.round(response.data.main.feels_like));
+        } else if (!rounded) {
+          setTemp(response.data.main.temp);
+          setFeel(response.data.main.feels_like);
+        }
+        if (response.data.weather.length) {
+          setWeather(response.data.weather[0].main);
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
     changeTempColor();
     changefeelColor();
   };
