@@ -14,10 +14,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Weather() {
-  const [temp, setTemp] = useState("");
-  const [feel, setFeel] = useState("");
   const [forecast, setForecast] = useState([]);
-  var tempArray = [];
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
@@ -36,26 +33,22 @@ export default function Weather() {
   };
 
   const call = () => {
-    if (city === "Unkown" || "") {
-      setTemp("Enter a location Dumbass");
-    } else {
-      axios
-        .request(options)
-        .then(function (response) {
-          const data = response.data.list;
-          setForecast(
-            data.map((value) => {
-              return {
-                min: value.temp.min,
-                max: value.temp.max,
-              };
-            })
-          );
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
+    axios
+      .request(options)
+      .then(function (response) {
+        const data = response.data.list;
+        setForecast(
+          data.map((value) => {
+            return {
+              min: value.temp.min,
+              max: value.temp.max,
+            };
+          })
+        );
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
