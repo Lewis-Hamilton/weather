@@ -80,6 +80,7 @@ export default function Weather() {
     } else if (temp >= 0 && temp < 32) {
       setTempColor("#0094FF");
     } else if (temp >= 32 && temp < 60) {
+      //change this color
       setTempColor("#0094FF");
     } else if (temp >= 60 && temp < 80) {
       setTempColor("#FFD100");
