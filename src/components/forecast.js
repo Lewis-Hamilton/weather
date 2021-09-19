@@ -14,10 +14,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Weather() {
-  const [temp, setTemp] = useState("");
-  const [feel, setFeel] = useState("");
   const [forecast, setForecast] = useState([]);
-  var tempArray = [];
   const unit = useSelector((state) => state.unitReducer.unit);
   const city = useSelector((state) => state.locationReducer.location);
   const rounded = useSelector((state) => state.tempReducer.rounded);
@@ -35,27 +32,40 @@ export default function Weather() {
     },
   };
 
+  //api call to get forecast data
   const call = () => {
-    if (city === "Unkown" || "") {
-      setTemp("Enter a location Dumbass");
-    } else {
-      axios
-        .request(options)
-        .then(function (response) {
-          const data = response.data.list;
-          setForecast(
-            data.map((value) => {
-              return {
-                min: value.temp.min,
-                max: value.temp.max,
-              };
-            })
-          );
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
+    axios
+      .request(options)
+      .then(function (response) {
+        const data = response.data.list;
+        if (data.length) {
+          if (rounded) {
+            setForecast(
+              data.map((value) => {
+                return {
+                  id: data.index,
+                  min: Math.round(value.temp.min),
+                  max: Math.round(value.temp.max),
+                };
+              })
+            );
+          } else if (!rounded) {
+            setForecast(
+              data.map((value) => {
+                return {
+                  id: data.index,
+                  min: value.temp.min,
+                  max: value.temp.max,
+                };
+              })
+            );
+          }
+        }
+      })
+
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -69,16 +79,23 @@ export default function Weather() {
       <Button onClick={() => call()}>forecast</Button>
       <Paper className={classes.paper}>
         <Typography variant="h6">Daily Forecast</Typography>
-        <Grid>
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItemss="center"
+          spacing={2}
+        >
           {forecast.map((forecast) => (
-            <>
-              <Grid item key={forecast.min}>
-                {"low " + forecast.min}
+            <Grid item>
+              <Grid item key={forecast.id}>
+                {forecast.min}
               </Grid>
-              <Grid item key={forecast.max}>
-                {"High" + forecast.max}
+              <Grid item key={forecast.id}>
+                {forecast.max}
               </Grid>
-            </>
+            </Grid>
           ))}
         </Grid>
       </Paper>

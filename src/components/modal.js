@@ -14,8 +14,8 @@ export default function Modal() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (city === "") setOpen(true);
-  }, [city]);
+    if (!city) setOpen(true);
+  }, []);
 
   return (
     <div>
