@@ -37,14 +37,25 @@ export default function Weather() {
       .request(options)
       .then(function (response) {
         const data = response.data.list;
-        setForecast(
-          data.map((value) => {
-            return {
-              min: value.temp.min,
-              max: value.temp.max,
-            };
-          })
-        );
+        if (rounded) {
+          setForecast(
+            data.map((value) => {
+              return {
+                min: Math.round(value.temp.min),
+                max: Math.round(value.temp.max),
+              };
+            })
+          );
+        } else if (!rounded) {
+          setForecast(
+            data.map((value) => {
+              return {
+                min: value.temp.min,
+                max: value.temp.max,
+              };
+            })
+          );
+        }
       })
       .catch(function (error) {
         console.error(error);
