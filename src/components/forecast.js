@@ -38,26 +38,31 @@ export default function Weather() {
       .request(options)
       .then(function (response) {
         const data = response.data.list;
-        if (rounded) {
-          setForecast(
-            data.map((value) => {
-              return {
-                min: Math.round(value.temp.min),
-                max: Math.round(value.temp.max),
-              };
-            })
-          );
-        } else if (!rounded) {
-          setForecast(
-            data.map((value) => {
-              return {
-                min: value.temp.min,
-                max: value.temp.max,
-              };
-            })
-          );
+        if (data.length) {
+          if (rounded) {
+            setForecast(
+              data.map((value) => {
+                return {
+                  id: data.index,
+                  min: Math.round(value.temp.min),
+                  max: Math.round(value.temp.max),
+                };
+              })
+            );
+          } else if (!rounded) {
+            setForecast(
+              data.map((value) => {
+                return {
+                  id: data.index,
+                  min: value.temp.min,
+                  max: value.temp.max,
+                };
+              })
+            );
+          }
         }
       })
+
       .catch(function (error) {
         console.error(error);
       });
@@ -81,10 +86,10 @@ export default function Weather() {
             justifyContent="center"
             alignItemss="center"
           >
-            <Grid item key={forecast.min}>
+            <Grid item key={forecast.id}>
               {"low " + forecast.min}
             </Grid>
-            <Grid item key={forecast.max}>
+            <Grid item key={forecast.id}>
               {"High" + forecast.max}
             </Grid>
           </Grid>
