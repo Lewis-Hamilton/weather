@@ -32,6 +32,7 @@ export default function Weather() {
     },
   };
 
+  //api call to get forecast data
   const call = () => {
     axios
       .request(options)

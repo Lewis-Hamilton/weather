@@ -45,6 +45,7 @@ export default function Weather() {
     color: funColors ? feelColor : "Black",
   };
 
+  //api call got get temperature data
   const call = () => {
     if (city === "Unkown" || "") {
       setTemp("Enter a location Dumbass");
@@ -74,6 +75,7 @@ export default function Weather() {
     changefeelColor();
   };
 
+  //function to change color based on temperature
   const changeTempColor = () => {
     if (temp < 0) {
       setTempColor("#00FFFD");
@@ -91,6 +93,7 @@ export default function Weather() {
     }
   };
 
+  //function to change color based on temperature feel
   const changefeelColor = () => {
     if (temp < 0) {
       setFeelColor("#00FFFD");
